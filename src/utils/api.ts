@@ -1,10 +1,17 @@
 const { API_URL } = require('Config');
-
+import i18n from 'i18next';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { Headers } from '@enums';
+import {
+  getAxiosResponseErrorCodeExceptionsList,
+  getAxiosResponseErrorUrlExceptionList,
+  ERROR_CODES,
+  ERROR_CUSTOM_SNACKS,
+} from '@constants';
+import { Event } from '@services';
+import { SnackType, Headers } from '@enums';
 import { getStorageInitData, clearData, clearStorageDataBeforeLogout } from '@utils';
-import { getAxiosResponseErrorCodeExceptionsList, getAxiosResponseErrorUrlExceptionList } from '@constants';
+import { addSnack, systemDispatch } from '@store';
 
 export const API: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -63,8 +70,9 @@ API.interceptors.response.use(
   (config: AxiosResponse) => config,
   async (error: AxiosError<{ code: number | string }[]>) => {
     let skipMessageDisplay = false;
-    const hasHandledErrorCode = error.response?.data ? error.response.data.length > 0 : false;
-    const errorCode = hasHandledErrorCode ? error.response?.data?.map((error) => error?.code) : (error.code as string);
+    const hasHandledErrorCode =
+      error.response?.data && Array.isArray(error.response.data) && error.response.data.length > 0;
+    const errorCode = hasHandledErrorCode ? error.response?.data?.map((error) => error.code) : error.code;
     const url = error?.config?.url ?? '';
     const codeExceptions = await getAxiosResponseErrorCodeExceptionsList();
     const urlExceptions = await getAxiosResponseErrorUrlExceptionList();
@@ -73,7 +81,6 @@ API.interceptors.response.use(
       const initData = getStorageInitData();
       if (initData) {
         clearStorageDataBeforeLogout();
-        window.location.replace('/');
       }
     }
 
@@ -82,11 +89,19 @@ API.interceptors.response.use(
         return !res ? error.config.url!.includes(url) : res;
       }, false);
     }
-
     if (!skipMessageDisplay && errorCode && errorCode?.length > 0) {
       skipMessageDisplay = codeExceptions.some((exception) =>
         Array.isArray(errorCode) ? errorCode.includes(exception) : exception === errorCode.toString(),
       );
+    }
+    if (!skipMessageDisplay && errorCode) {
+      Event.fire(systemDispatch.type, {
+        type: addSnack.type,
+        payload: ERROR_CUSTOM_SNACKS[errorCode.toString() as ERROR_CODES] || {
+          type: SnackType.Error,
+          message: i18n.exists(`errors:${errorCode}`) ? i18n.t(`errors:${errorCode}`) : i18n.t('errors:SYSTEM_ERROR'),
+        },
+      });
     }
     return Promise.reject(error);
   },

@@ -1,0 +1,17 @@
+{
+  "header": {
+    "dashboard": "仪表盘",
+    "orders": "订单",
+    "products": "产品",
+    "reports": "报告",
+    "controlPanel": "控制面板",
+    "you": "你"
+  },
+  "button": {
+    "profileSettings": "个人资料设置",
+    "logOut": "登出",
+    "close": "关闭"
+  },
+  "noConnection": "网络连接已经pokai",
+  "connectionRestored": "连接已恢复"
+}

@@ -9,7 +9,7 @@ export function register() {
       navigator.serviceWorker
         .register('/service-worker.js')
         .then((registration) => {
-          console.log('Service Worker registered', registration);
+          console.log('Service Worker registered');
           // Call the registerValidSW function to handle registration and update
           registerValidSW('/service-worker.js', {
             onUpdate: () => {

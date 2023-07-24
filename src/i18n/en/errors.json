@@ -1,0 +1,6 @@
+{
+  "SYSTEM_ERROR": "A system error occurred. Please contact your system administrator",
+  "USER_CREDENTIAL_INVALID": "Invalid username or password",
+  "TOO_MANY_LOGIN_ATTEMPTS": "Too many login attempts. Please try again later.",
+  "UNAUTHORIZED": "Unauthorized user detected"
+}

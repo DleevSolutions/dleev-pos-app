@@ -1,8 +1,8 @@
 import createSagaMiddleware from 'redux-saga';
 import { configureStore, combineReducers, Reducer } from '@reduxjs/toolkit';
-
 import type { StoreWithDynamicReducers } from '@types';
 import { rootReducers } from './slices';
+import rootSaga from '@sagas';
 
 export const reducers: { [key: string]: Reducer } = rootReducers;
 
@@ -36,10 +36,9 @@ const initStore = () => {
     store.replaceReducer(createDynamicReducer(store.asyncReducers));
     return store;
   };
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };
 
 export const store = initStore();
-
-export const runSaga = sagaMiddleware.run;

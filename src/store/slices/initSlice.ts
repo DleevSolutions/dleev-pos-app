@@ -12,11 +12,9 @@ const initialState: InitSliceState = {
 
 export const initSlice = createSlice({
   name: 'init',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     appInit: () => {},
-    // Use the PayloadAction type to declare the contents of `action.payload`
     appInitSuccess(state, action: PayloadAction<boolean>) {
       state.loading = false;
       state.status = action.payload;

@@ -1,26 +1,97 @@
+import { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Lottie, { LottieRefCurrentProps } from 'lottie-react';
+import animationData from '@assets/icons/phone-animation.json';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 
-import { useNavigate } from 'react-router-dom';
+import { LoginContainer } from '@containers';
+import { useAppDispatch } from '@hooks';
+import { selectUserDetails, selectLoginLoading, login } from '@store';
+import { FormInputText } from '@src/components';
 
-import { MainContentContainer } from '@containers';
+import theme from '@src/styles/theme';
 
 export const UserLogin = () => {
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate('/settings');
+  const dispatch = useAppDispatch();
+
+  const { t: tSignIn } = useTranslation('signIn');
+
+  const loginDetails = selectUserDetails();
+  const loading = selectLoginLoading();
+  const phoneRef = useRef<LottieRefCurrentProps>(null);
+
+  const defaultValues = {
+    email: '',
+    password: '',
   };
+
+  const { handleSubmit, reset, control } = useForm<any>({
+    mode: 'onBlur',
+    defaultValues,
+    shouldFocusError: true,
+    shouldUnregister: true,
+  });
+
+  useEffect(() => {
+    if (Object.keys(loginDetails).length > 0 && !loading) {
+      navigate('/dashboard');
+      reset();
+    }
+  }, [loginDetails]);
+
+  const onSubmitHandler = (data) => {
+    if (data) {
+      dispatch(login(data));
+    }
+  };
+
   return (
-    <MainContentContainer>
-      <Box>
-        <Stack spacing={2}>
-          <h3>User Login</h3>
-          <Button onClick={handleLogin} variant={'outlined'} data-testid="formCancelButton">
-            {'next route'}
+    <LoginContainer fullHeight>
+      <Box
+        className="m-auto"
+        sx={{
+          border: '0px',
+          overflow: 'hidden',
+          boxShadow: '0 5px 15px rgba(0,0,0,.5)',
+        }}
+      >
+        <Stack
+          spacing={2}
+          sx={({ spacing, palette }) => ({
+            minWidth: { xs: 'unset', sm: spacing(50) },
+            padding: spacing(2),
+            paddingTop: spacing(0),
+            backgroundColor: palette.background.default,
+          })}
+        >
+          <Lottie
+            className="m-auto"
+            style={{ width: theme.spacing(25), height: theme.spacing(25) }}
+            lottieRef={phoneRef}
+            animationData={animationData}
+          />
+          <Typography variant="headerS">{`${tSignIn('title')}`}</Typography>
+          <Grid item>
+            <FormInputText control={control} name="email" label={`${tSignIn('form.email')}`} fullWidth required />
+          </Grid>
+          <Grid item>
+            <FormInputText control={control} name="password" label={`${tSignIn('form.password')}`} fullWidth required />
+          </Grid>
+          <Button onClick={handleSubmit(onSubmitHandler)} variant="outlined" data-testid="formSignInButton">
+            {`${tSignIn('signInButton')}`}
+            {loading && <CircularProgress size="20px" color="inherit" sx={{ ml: 1 }} data-testid="progressbar" />}
           </Button>
         </Stack>
       </Box>
-    </MainContentContainer>
+    </LoginContainer>
   );
 };

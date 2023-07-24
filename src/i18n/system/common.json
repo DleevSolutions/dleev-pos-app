@@ -1,0 +1,17 @@
+{
+  "header": {
+    "dashboard": "header.dashboard",
+    "orders": "header.orders",
+    "products": "header.products",
+    "reports": "header.reports",
+    "controlPanel": "header.controlPanel",
+    "you": "header.you"
+  },
+  "button": {
+    "profileSettings": "button.profileSettings",
+    "logOut": "button.logOut",
+    "close": "button.close"
+  },
+  "noConnection": "noInternetConnection",
+  "connectionRestored": "connectionRestored"
+}
