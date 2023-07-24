@@ -1,0 +1,8 @@
+{
+  "title": "title",
+  "signInButton": "signInButton",
+  "form": {
+    "email": "form.email",
+    "password": "form.password"
+  }
+}

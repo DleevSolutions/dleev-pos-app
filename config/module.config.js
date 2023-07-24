@@ -6,15 +6,17 @@ const moduleConfig = {
   remotes: {},
   exposes: {
     './App': './src/App',
+    './translations': './src/i18n/config',
     './styles': './src/styles',
     './utils': './src/utils',
     './constants': './src/constants',
     './components': './src/components',
     './containers': './src/containers',
     './services': './src/services',
+    './guards': './src/guards',
     './hooks': './src/hooks',
     './store': './src/store',
-    './enums': './src/enums',
+    './validators': './src/validators',
     './types': './src/types',
   },
   shared: {

@@ -1,0 +1,14 @@
+{
+  "title": {
+    "en": "title.en",
+    "ch": "title.ch"
+  },
+  "description": {
+    "en": "description.english",
+    "cmn": "description.mandarin",
+    "ms": "description.malay",
+    "ta": "description.tamil",
+    "ch": "description.chinese",
+    "other": "description.other"
+  }
+}

@@ -8,3 +8,7 @@ export enum FrontendErrorType {
   RENDER = 'FRONTEND-RENDER-ERROR',
   CONSOLE = 'FRONTEND-CONSOLE-ERROR',
 }
+
+export enum SystemModuleName {
+  Merchant = 'Merchant',
+}

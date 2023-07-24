@@ -1,0 +1,8 @@
+{
+  "title": "使用您的电子邮件和密码登录",
+  "signInButton": "登入",
+  "form": {
+    "email": "电子邮件",
+    "password": "密码"
+  }
+}

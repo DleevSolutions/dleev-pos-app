@@ -2,7 +2,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { WithSx } from '@types';
-import { convertSxToArray } from '@utils/converters';
+import { convertSxToArray } from '@utils';
 
 interface GlobalLoaderProps extends WithSx {
   invisible?: boolean;

@@ -7,14 +7,18 @@ import { convertSxToArray } from '@utils';
 import { NoPermissions } from '@containers';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
+import { Header } from './Header';
+
 type MainLayoutProps = WithSx<PropsWithChildren<{}>>;
 
 export const MainLayout = ({ children, sx = [] }: MainLayoutProps) => {
   const userPermissions = true;
 
   if (!userPermissions) return <NoPermissions />;
+
   return (
     <ErrorBoundary logErrors>
+      <Header />
       {children}
       <Box
         sx={[
