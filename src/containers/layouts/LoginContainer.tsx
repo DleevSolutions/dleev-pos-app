@@ -4,10 +4,10 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import type { BoxProps } from '@mui/material/Box';
 
-import { WithSx } from '@types';
+import type { WithSx } from '@types';
 import { convertSxToArray } from '@utils';
 
-import LanguageSelector from '@src/components/LanguageSelector/LanguageSelector';
+import LanguageSelector from '@components/LanguageSelector/LanguageSelector';
 
 type MainContentContainerProps = WithSx<
   PropsWithChildren<{

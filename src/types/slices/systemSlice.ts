@@ -1,4 +1,5 @@
 import { SystemModuleName } from '@enums';
+import type { ErrorType } from '../api';
 
 export interface SystemSliceState {
   moduleBuildVersions: {
@@ -14,5 +15,5 @@ export interface SystemSliceState {
   page: {
     isActive: boolean;
   };
-  error: any;
+  error: ErrorType;
 }

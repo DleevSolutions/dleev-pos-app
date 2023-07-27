@@ -7,7 +7,7 @@ import { useAppSelector } from '@hooks';
 const initialState: InitSliceState = {
   loading: true,
   status: false,
-  error: undefined,
+  error: null,
 };
 
 export const initSlice = createSlice({

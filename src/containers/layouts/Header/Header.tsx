@@ -27,16 +27,15 @@ import { NavigationDrawer } from './components/NavigationDrawer';
 type HeaderProps = WithSx;
 
 export const Header = ({ sx = [] }: HeaderProps) => {
-  const { t } = useTranslation('common');
+  const { t: tCommon } = useTranslation('common');
   const dispatch = useAppDispatch();
+  const user = selectUserDetails();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const open = Boolean(anchorEl);
-  const user = selectUserDetails();
-  const navigate = useNavigate();
 
-  const [userRole] = useState(user?.role ?? 'Gay');
-  const [username] = useState(`${user?.firstName ?? 'Mr.'} ${user?.lastName ?? 'Eason'}`);
+  const [avatarName] = useState(user && `${user.firstName[0]} ${user.lastName[0]}`);
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLElement>) => {
@@ -104,7 +103,7 @@ export const Header = ({ sx = [] }: HeaderProps) => {
               <>
                 <IconButton onClick={handleClick} disableRipple sx={{ p: 0 }} data-testid="headerAvatarButton">
                   <Avatar sx={{ width: 40, height: 40 }} src={user?.image}>
-                    {username}
+                    {avatarName}
                   </Avatar>
                 </IconButton>
                 <Menu
@@ -126,7 +125,7 @@ export const Header = ({ sx = [] }: HeaderProps) => {
                     })}
                   >
                     <Avatar sx={{ width: 64, height: 64 }} src={user?.image}>
-                      {username}
+                      {avatarName}
                     </Avatar>
                     <Stack
                       direction="column"
@@ -135,23 +134,25 @@ export const Header = ({ sx = [] }: HeaderProps) => {
                         maxWidth: spacing(21.5),
                       })}
                     >
-                      <Typography variant="paragraphM">{`${username} (${t('header.you')})`}</Typography>
+                      <Typography variant="paragraphM">{`${user.firstName} ${user.lastName} (${tCommon(
+                        'header.you',
+                      )})`}</Typography>
                       <Typography
                         variant="labelS"
                         sx={(theme) => ({
                           color: theme.palette.text.secondary,
                         })}
                       >
-                        {userRole}
+                        {tCommon(user?.roles)}
                       </Typography>
                     </Stack>
                   </Stack>
                   <MenuItem onClick={redirectToSettings} data-testid="profileSettingsMenuItem">
-                    <Typography variant="paragraphM">{t('button.profileSettings')}</Typography>
+                    <Typography variant="paragraphM">{tCommon('button.profileSettings')}</Typography>
                   </MenuItem>
                   <Divider sx={(theme) => ({ m: '0 !important', borderColor: theme.palette.border.default })} />
                   <MenuItem onClick={handleLogOut} data-testid="logoutMenuItem">
-                    <Typography variant="paragraphM">{t('button.logOut')}</Typography>
+                    <Typography variant="paragraphM">{tCommon('button.logOut')}</Typography>
                   </MenuItem>
                 </Menu>
               </>

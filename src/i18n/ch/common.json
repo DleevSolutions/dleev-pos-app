@@ -12,6 +12,12 @@
     "logOut": "登出",
     "close": "关闭"
   },
+  "validation": {
+    "checkTheEmailFormat": "无效的电子邮件格式",
+    "length": "无效字段长度 - 最少 {{min}} 个字符，最多 {{max}} 个字符",
+    "maxLength": "无效字段长度 - 最多 {{max}} 个字符",
+    "required": "必填字段"
+  },
   "noConnection": "网络连接已经pokai",
   "connectionRestored": "连接已恢复"
 }

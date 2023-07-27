@@ -12,6 +12,13 @@
     "logOut": "Log Out",
     "close": "Close"
   },
+  "validation": {
+    "checkTheEmailFormat": "Invalid Email Format",
+    "length": "Invalid field length - min {{min}} chars and max {{max}} chars",
+    "maxLength": "Invalid field length - max {{max}} chars",
+    "required": "Required field"
+  },
   "noConnection": "No internet connection",
-  "connectionRestored": "Connection is restored"
+  "connectionRestored": "Connection is restored",
+  "ROLE_SUPERADMIN": "Super Admin"
 }
