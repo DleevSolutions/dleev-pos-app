@@ -15,7 +15,7 @@ const initialState: SystemSliceState = {
   page: {
     isActive: true,
   },
-  error: undefined,
+  error: null,
 };
 
 export interface SystemUpdatePageFocusPayload {

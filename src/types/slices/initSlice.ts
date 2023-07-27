@@ -1,5 +1,7 @@
+import type { ErrorType } from '@types';
+
 export type InitSliceState = {
   loading: boolean;
   status: boolean;
-  error: any;
+  error: ErrorType;
 };

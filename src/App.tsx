@@ -2,7 +2,8 @@ import './i18n';
 
 import useNavigatorOnline from 'use-navigator-online';
 import { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 import theme from './styles/theme';
 import { globalStyles } from './styles';
@@ -15,14 +16,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { GlobalLoader, ProtectedRoute, Snacks } from '@components';
 import { systemDispatch, systemUpdateNetworkConnection } from '@store/slices';
 import { ControlPanel, DashBoard, Orders, Products, Reports, UserLogin } from '@pages';
+import { getRoutePermissions } from '@utils';
 import { MainLayout } from '@containers';
-import { PayloadAction } from '@reduxjs/toolkit';
-import { Event } from '@services/Event/Event';
+import { Event } from '@services';
+import { ROUTES } from '@constants';
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const { showRoute } = getRoutePermissions();
   const { isOnline, isOffline, backOnline, backOffline } = useNavigatorOnline();
-  const isInitLoading = false;
+
+  const loading = false;
 
   useEffect(() => {
     const onSystemDispatch = (action: PayloadAction<any>) => {
@@ -59,7 +63,7 @@ const App = () => {
     }
   }, [backOnline, backOffline]);
 
-  if (isInitLoading)
+  if (loading)
     return (
       <ThemeProvider theme={theme}>
         {globalStyles}
@@ -76,73 +80,64 @@ const App = () => {
             <Snacks />
             <Routes>
               <Route
-                path={'/'}
+                path={ROUTES.main}
                 element={
-                  <ProtectedRoute isAllowed={true}>
+                  <ProtectedRoute isAllowed={showRoute.login}>
                     <UserLogin />
                   </ProtectedRoute>
                 }
               />
               <Route
-                path={'/'}
+                path={ROUTES.dashboard}
                 element={
                   <MainLayout>
-                    <ProtectedRoute isAllowed={true}>
-                      <UserLogin />
-                    </ProtectedRoute>
-                  </MainLayout>
-                }
-              />
-              <Route
-                path={'/dashboard'}
-                element={
-                  <MainLayout>
-                    <ProtectedRoute isAllowed={true}>
+                    <ProtectedRoute isAllowed={showRoute.dashboard}>
                       <DashBoard />
                     </ProtectedRoute>
                   </MainLayout>
                 }
               />
               <Route
-                path={'/orders'}
+                path={ROUTES.orders}
                 element={
                   <MainLayout>
-                    <ProtectedRoute isAllowed={true}>
+                    <ProtectedRoute isAllowed={showRoute.orders}>
                       <Orders />
                     </ProtectedRoute>
                   </MainLayout>
                 }
               />
               <Route
-                path={'/products'}
+                path={ROUTES.products}
                 element={
                   <MainLayout>
-                    <ProtectedRoute isAllowed={true}>
+                    <ProtectedRoute isAllowed={showRoute.products}>
                       <Products />
                     </ProtectedRoute>
                   </MainLayout>
                 }
               />
               <Route
-                path={'/reports'}
+                path={ROUTES.reports}
                 element={
                   <MainLayout>
-                    <ProtectedRoute isAllowed={true}>
+                    <ProtectedRoute isAllowed={showRoute.reports}>
                       <Reports />
                     </ProtectedRoute>
                   </MainLayout>
                 }
               />
               <Route
-                path={'/control-panel'}
+                path={ROUTES.controlPanel}
                 element={
                   <MainLayout>
-                    <ProtectedRoute isAllowed={true}>
+                    <ProtectedRoute isAllowed={showRoute.controlPanel}>
                       <ControlPanel />
                     </ProtectedRoute>
                   </MainLayout>
                 }
               />
+              <Route path="*" element={<Navigate to="." replace />} />
             </Routes>
           </Suspense>
         </Router>

@@ -12,6 +12,12 @@
     "logOut": "button.logOut",
     "close": "button.close"
   },
+  "validation": {
+    "checkTheEmailFormat": "validation.checkTheEmailFormat",
+    "length": "validation.length",
+    "maxLength": "validation.maxLength",
+    "required": "validation.required"
+  },
   "noConnection": "noInternetConnection",
   "connectionRestored": "connectionRestored"
 }

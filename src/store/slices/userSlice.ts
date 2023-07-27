@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { RootState } from '@types';
+import type { ErrorType, RootState, UserDetails, UserLoginRequest, UserSliceState } from '@types';
 import { useAppSelector } from '@hooks';
 
-const initialState: any = {
+const userInitialState: UserSliceState = {
   loading: false,
-  details: {},
-  error: undefined,
+  details: null,
+  error: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: userInitialState,
   reducers: {
-    login: (state, { payload }: PayloadAction<any>) => {
+    login: (state, { payload }: PayloadAction<UserLoginRequest>) => {
       state.loading = true;
     },
-    loginSuccess: (state, { payload }: PayloadAction<any>) => {
+    loginSuccess: (state, { payload }: PayloadAction<UserDetails>) => {
       state.details = payload;
       state.loading = false;
     },
-    loginError: (state, { payload }: PayloadAction<any>) => {
+    loginError: (state, { payload }: PayloadAction<ErrorType>) => {
       state.error = payload;
       state.loading = false;
     },

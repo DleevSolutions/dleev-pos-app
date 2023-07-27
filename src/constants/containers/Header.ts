@@ -1,4 +1,3 @@
-import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import ScienceOutlinedIcon from '@mui/icons-material/ScienceOutlined';
 import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
@@ -10,7 +9,7 @@ import { ROUTES } from '../global/route';
 import type { ItemProps } from '@containers/layouts/Header/components/NavigationDrawer/components/MenuItem';
 
 export const navTabs: NavigationTab[] = [
-  { title: 'header.dashboard', path: `/${ROUTES.main}`, permission: 'dashboard' },
+  { title: 'header.dashboard', path: `/${ROUTES.dashboard}`, permission: 'dashboard' },
   { title: 'header.orders', path: `/${ROUTES.orders}`, permission: 'orders' },
   { title: 'header.products', path: `/${ROUTES.products}`, permission: 'products' },
   { title: 'header.reports', path: `/${ROUTES.reports}`, permission: 'reports' },
@@ -22,7 +21,7 @@ export const drawerMenuItems: ItemProps[] = [
     id: '1',
     name: 'header.dashboard',
     isOpen: false,
-    link: `/${ROUTES.main}`,
+    link: `/${ROUTES.dashboard}`,
     icon: GroupsOutlinedIcon,
     permission: 'dashboard',
   },

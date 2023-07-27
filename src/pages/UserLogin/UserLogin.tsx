@@ -12,10 +12,12 @@ import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 
-import { LoginContainer } from '@containers';
 import { useAppDispatch } from '@hooks';
+import { FormInputText } from '@components';
+import { LoginContainer } from '@containers';
+import type { UserLoginRequest } from '@types';
 import { selectUserDetails, selectLoginLoading, login } from '@store';
-import { FormInputText } from '@src/components';
+import { validatorRequired, validatorMaxLength, validatorMinLength, validatorEmailFormat } from '@validators';
 
 import theme from '@src/styles/theme';
 
@@ -42,16 +44,14 @@ export const UserLogin = () => {
   });
 
   useEffect(() => {
-    if (Object.keys(loginDetails).length > 0 && !loading) {
+    if (loginDetails && Object.keys(loginDetails).length > 0 && !loading) {
       navigate('/dashboard');
       reset();
     }
   }, [loginDetails]);
 
-  const onSubmitHandler = (data) => {
-    if (data) {
-      dispatch(login(data));
-    }
+  const onSubmitHandler = (data: UserLoginRequest) => {
+    dispatch(login(data));
   };
 
   return (
@@ -81,12 +81,40 @@ export const UserLogin = () => {
           />
           <Typography variant="headerS">{`${tSignIn('title')}`}</Typography>
           <Grid item>
-            <FormInputText control={control} name="email" label={`${tSignIn('form.email')}`} fullWidth required />
+            <FormInputText
+              control={control}
+              name="email"
+              label={`${tSignIn('form.email')}`}
+              fullWidth
+              required
+              rules={{
+                required: validatorRequired(),
+                minLength: validatorMinLength(1, 256),
+                maxLength: validatorMaxLength(1, 256),
+                pattern: validatorEmailFormat(),
+              }}
+            />
           </Grid>
           <Grid item>
-            <FormInputText control={control} name="password" label={`${tSignIn('form.password')}`} fullWidth required />
+            <FormInputText
+              control={control}
+              name="password"
+              label={`${tSignIn('form.password')}`}
+              fullWidth
+              required
+              rules={{
+                required: validatorRequired(),
+                minLength: validatorMinLength(1, 256),
+                maxLength: validatorMaxLength(1, 256),
+              }}
+            />
           </Grid>
-          <Button onClick={handleSubmit(onSubmitHandler)} variant="outlined" data-testid="formSignInButton">
+          <Button
+            disabled={loading}
+            onClick={handleSubmit(onSubmitHandler)}
+            variant="outlined"
+            data-testid="formSignInButton"
+          >
             {`${tSignIn('signInButton')}`}
             {loading && <CircularProgress size="20px" color="inherit" sx={{ ml: 1 }} data-testid="progressbar" />}
           </Button>
