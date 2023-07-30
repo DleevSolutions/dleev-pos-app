@@ -2,16 +2,14 @@ import uniqid from 'uniqid';
 
 import Box from '@mui/material/Box';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Typography from '@mui/material/Typography';
 import { Theme } from '@mui/material/styles';
 
 import { useSnack } from '@hooks';
 import { SnackType } from '@enums';
 import { selectSnacks } from '@store';
-import { DeleteIcon } from '@assets/icons';
+import { CloseIcon, DeleteIcon, ErrorIcon, TaskIcon } from '@src/assets/icons';
+
 
 export const Snacks = () => {
   const snacks = selectSnacks();
@@ -23,11 +21,11 @@ export const Snacks = () => {
   const getIcon = () => {
     switch (snack.type) {
       case SnackType.Error:
-        return <ErrorOutlineIcon />;
+        return <ErrorIcon />;
       case SnackType.Delete:
         return <DeleteIcon />;
       default:
-        return <TaskAltOutlinedIcon />;
+        return <TaskIcon />;
     }
   };
 
@@ -49,7 +47,7 @@ export const Snacks = () => {
           open
           key={uniqid()}
           anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
-          autoHideDuration={snack.timeout}
+          // autoHideDuration={snack.timeout}
           onClose={handleClose}
           sx={{
             '& .MuiSvgIcon-root,& .MuiTypography-root': {
@@ -73,7 +71,7 @@ export const Snacks = () => {
             <Typography variant="labelM" sx={{ ml: 2 }}>
               {snack.message}
             </Typography>
-            <CloseOutlinedIcon sx={{ ml: 2, cursor: 'pointer' }} onClick={handleClose} />
+            <CloseIcon sx={{ ml: 2, cursor: 'pointer' }} onClick={handleClose} />
           </Box>
         </Snackbar>
       )}
